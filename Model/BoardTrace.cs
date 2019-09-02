@@ -6,26 +6,41 @@ using System.IO;
 
 namespace Okorodudu.Checkers.Model
 {
-   /// <summary>
-   /// Utility class to trace the board state
-   /// </summary>
-   public static class BoardTrace
+    /// <summary>
+    ///  BoardTrace - Трассировка доски
+    /// Utility class to trace the board state
+    ///  Класс утилиты для отслеживания состояния платы
+    /// </summary>
+    public static class BoardTrace
    {
-      /// <summary>
-      /// Write the board state to the console
-      /// </summary>
-      /// <param name="board">The board</param>
-      public static void DrawBoard(IBoard board)
+        /// <summary>
+        /// DrawBoard - Доска для рисования
+        /// Write the board state to the console
+        /// Записать состояние платы в консоль
+        /// </summary>
+        /// <param name="board">
+        /// The board
+        /// Доска 
+        /// </param>
+        public static void DrawBoard(IBoard board)
       {
          DrawBoard(board, Console.Out);
       }
 
-      /// <summary>
-      /// Write the board state to the console
-      /// </summary>
-      /// <param name="board">The board</param>
-      /// <param name="writer">The writer</param>
-      public static void DrawBoard(IBoard board, TextWriter writer)
+        /// <summary>
+        ///  DrawBoard - Доска для рисования
+        /// Write the board state to the console
+        /// Записать состояние платы в консоль
+        /// </summary>
+        /// <param name="board">
+        /// The board
+        /// Доска
+        /// </param>
+        /// <param name="writer">
+        /// The writer
+        ///  писатель
+        /// </param>
+        public static void DrawBoard(IBoard board, TextWriter writer)
       {
          StringBuilder buf1 = new StringBuilder();
          StringBuilder buf2 = new StringBuilder();

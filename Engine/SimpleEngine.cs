@@ -6,25 +6,44 @@ using Okorodudu.Checkers.Model;
 
 namespace Okorodudu.Checkers.Engine
 {
-   /// <summary>
-   /// A basic checkers move generation engine.
-   /// </summary>
-   public class SimpleEngine : IEngine
+    /// <summary>
+    /// SimpleEngine - Простой движок
+    /// A basic checkers move generation engine.
+    /// Базовые шашки движут двигателем поколения.
+    /// </summary>
+    public class SimpleEngine : IEngine
    {
       private static readonly Random random = new Random();
       private readonly object SynchRoot = new object();
       private bool forceMove;
 
 
-      /// <summary>
-      /// Generate a move for the given board state
-      /// </summary>
-      /// <param name="board">The board state</param>
-      /// <param name="player">The player to generate the move for</param>
-      /// <param name="ply">The maximum ply</param>
-      /// <param name="timeout">The maximum time allowed to generate teh move</param>
-      /// <returns>The generated move</returns>
-      public Move GenerateMove(IBoard board, Player player, int ply, TimeSpan timeout)
+        /// <summary>
+        ///  GenerateMove - Создать ход
+        /// Generate a move for the given board state
+        /// Генерируем ход для данного состояния доски
+        /// </summary>
+        /// <param name="board">
+        /// The board state
+        /// Состояние доски 
+        /// </param>
+        /// <param name="player">
+        /// The player to generate the move for
+        /// Игрок, который генерирует ход для 
+        /// </param>
+        /// <param name="ply">
+        /// The maximum ply
+        /// Максимальный слой 
+        /// </param>
+        /// <param name="timeout">
+        /// The maximum time allowed to generate teh move
+        /// Максимальное время, необходимое для генерации перемещения
+        /// </param>
+        /// <returns>
+        /// The generated move
+        /// Сгенерированный ход 
+        /// </returns>
+        public Move GenerateMove(IBoard board, Player player, int ply, TimeSpan timeout)
       {
          lock (SynchRoot)
          {
@@ -41,12 +60,16 @@ namespace Okorodudu.Checkers.Engine
          }
       }
 
+
+
+
       private int MiniMax(ref Move bestMove, IBoard board, Player player, int ply, int depth, TimeSpan timeout, DateTime startTime)
       {
          if (depth <= 0)
          {
-            // reached ply level
-            return Evaluate(board, player);
+                // reached ply level
+                // достиг уровня слоя
+                return Evaluate(board, player);
          }
          else if (forceMove)
          {
@@ -56,8 +79,9 @@ namespace Okorodudu.Checkers.Engine
          ICollection<Move> moves = CheckerMoveRules.GetAvailableMoves(board, player);
          if ((moves == null) || (moves.Count == 0))
          {
-            // reached leaf
-            return Evaluate(board, player);
+                // reached leaf
+                // достиг листа
+                return Evaluate(board, player);
          }
 
 
@@ -68,9 +92,9 @@ namespace Okorodudu.Checkers.Engine
          {
             CheckerMoveRules.UpdateBoard(boardCopy, move);
             int score = -MiniMax(ref bestMove, boardCopy, opponent, ply, depth - 1, timeout, startTime);
-            boardCopy.Copy(board);// undo move
+            boardCopy.Copy(board);// undo move //отменить движение
 
-            if (depth == ply)
+                if (depth == ply)
             {
                System.Diagnostics.Trace.WriteLine(string.Format(CultureInfo.InvariantCulture, "Move: {0}.  Score: {1}", move, score.ToString(CultureInfo.InvariantCulture)));
                if ((bestMove == null) || (score > bestScore))
@@ -85,21 +109,28 @@ namespace Okorodudu.Checkers.Engine
          return bestScore;
       }
 
-      /// <summary>
-      /// Notify the engine to hault move generation
-      /// </summary>
-      public void CancelProcessing()
+        /// <summary>
+        ///  CancelProcessing - Отмена обработки
+        /// Notify the engine to hault move generation
+        /// Уведомить двигатель, чтобы остановить генерацию движения
+        /// </summary>
+        public void CancelProcessing()
       {
          forceMove = true;
       }
 
-      /// <summary>
-      /// Force the engine to move immediately
-      /// </summary>
-      public void ForceMove()
+        /// <summary>
+        /// ForceMove - Движение силы
+        /// Force the engine to move immediately
+        /// Заставить двигатель немедленно двигаться
+        /// </summary>
+        public void ForceMove()
       {
          forceMove = true;
       }
+
+
+
 
       private static int Evaluate(IBoard board, Player player)
       {
