@@ -266,28 +266,36 @@ namespace Okorodudu.Checkers.Engine
                );
       }
 
-      /// <summary>
-      /// Check the piece at the postion can jump any pieces on the board
-      /// </summary>
-      /// <param name="board">
-      /// the board state
-      /// </param>
-      /// <param name="row">
-      /// the row the piece is on
-      /// </param>
-      /// <param name="col">
-      /// the column the piece is on
-      /// </param>
-      /// <param name="verticalDirection">
-      /// the vertical direction to move in
-      /// </param>
-      /// <param name="horizontalDirection">
-      /// the horizontal direction to move in
-      /// </param>
-      /// <returns><code>true</code> 
-      /// if the piece can make a jump
-      /// </returns>
-      private static bool CanJump(IBoard board, int row, int col, int verticalDirection, int horizontalDirection)
+        /// <summary>
+        /// CanJump - Может прыгать
+        /// Check the piece at the postion can jump any pieces on the board
+        /// Проверьте фигуру в позиции, можете прыгать любые фигуры на доске
+        /// </summary>
+        /// <param name="board">
+        /// the board state
+        /// состояние правления
+        /// </param>
+        /// <param name="row">
+        /// the row the piece is on
+        /// строка, на которой стоит произведение
+        /// </param>
+        /// <param name="col">
+        /// the column the piece is on
+        /// колонка, на которой находится произведение
+        /// </param>
+        /// <param name="verticalDirection">
+        /// the vertical direction to move in
+        /// вертикальное направление движения
+        /// </param>
+        /// <param name="horizontalDirection">
+        /// the horizontal direction to move in
+        /// горизонтальное направление движения
+        /// </param>
+        /// <returns><code>true</code> 
+        /// if the piece can make a jump
+        /// если кусок может совершить прыжок
+        /// </returns>
+        private static bool CanJump(IBoard board, int row, int col, int verticalDirection, int horizontalDirection)
       {
          int newRow = row + verticalDirection;
          int newCol = col + horizontalDirection;
@@ -308,19 +316,24 @@ namespace Okorodudu.Checkers.Engine
          return false;
       }
 
-      /// <summary>
-      /// Check if the player has any more moves
-      /// </summary>
-      /// <param name="board">
-      /// the state of the board
-      /// </param>
-      /// <param name="player">
-      /// the player with the turn
-      /// </param>
-      /// <returns><code>true</code> 
-      /// if the player can make a move
-      /// </returns>
-      public static bool HasMovesAvailable(IBoard board, Player player)
+        /// <summary>
+        /// HasMovesAvailable - Есть фильмы в наличии
+        /// Check if the player has any more moves
+        /// Проверьте, есть ли у игрока больше ходов
+        /// </summary>
+        /// <param name="board">
+        /// the state of the board
+        /// состояние правления
+        /// </param>
+        /// <param name="player">
+        /// the player with the turn
+        /// игрок с терном
+        /// </param>
+        /// <returns><code>true</code> 
+        /// if the player can make a move
+        /// если игрок может сделать ход
+        /// </returns>
+        public static bool HasMovesAvailable(IBoard board, Player player)
       {
          for (int row = 0; row < board.Rows; row++)
          {
@@ -343,43 +356,55 @@ namespace Okorodudu.Checkers.Engine
          return false;
       }
 
-      /// <summary>
-      /// Check if the location is within the board bounds
-      /// </summary>
-      /// <param name="row">
-      /// the block row
-      /// </param>
-      /// <param name="col">
-      /// the block column
-      /// </param>
-      /// <param name="board">
-      /// The board to check bounds with
-      /// </param>
-      /// <returns><code>true</code> 
-      /// if the location is within the board bounds
-      /// </returns>
-      private static bool InBounds(int row, int col, IBoard board)
+        /// <summary>
+        /// InBounds - В границах
+        /// Check if the location is within the board bounds
+        /// Проверьте, находится ли локация в границах доски
+        /// </summary>
+        /// <param name="row">
+        /// the block row
+        /// ряд блока
+        /// </param>
+        /// <param name="col">
+        /// the block column
+        /// колонка блока
+        /// </param>
+        /// <param name="board">
+        /// The board to check bounds with
+        /// Доска для проверки границ
+        /// </param>
+        /// <returns><code>true</code> 
+        /// if the location is within the board bounds
+        /// если локация находится в пределах досок
+        /// </returns>
+        private static bool InBounds(int row, int col, IBoard board)
       {
          return ((row >= 0) && (row < board.Rows) && (col >= 0) && (col < board.Cols));
       }
 
 
-      /// <summary>
-      /// Is the move legal. This move doesn't check multiple jumps.
-      /// </summary>
-      /// <param name="board">
-      /// the board state
-      /// </param>
-      /// <param name="move">
-      /// the move to test
-      /// </param>
-      /// <param name="player">
-      /// the player with the turn
-      /// </param>
-      /// <returns>
-      /// LEGAL if the move is legal.  Illegal if the move is not legal.  INCOMPLETE if the move results in a jump.
-      /// </returns>
-      public static MoveStatus IsMoveLegal(IBoard board, Move move, Player player)
+        /// <summary>
+        /// IsMoveLegal - Это законно
+        /// Is the move legal. This move doesn't check multiple jumps.
+        /// Это законный ход. Этот ход не проверяет несколько прыжков.
+        /// </summary>
+        /// <param name="board">
+        /// the board state
+        /// состояние правления
+        /// </param>
+        /// <param name="move">
+        /// the move to test
+        /// движение к тесту
+        /// </param>
+        /// <param name="player">
+        /// the player with the turn
+        /// игрок с поворотом
+        /// </param>
+        /// <returns>
+        /// LEGAL if the move is legal.  Illegal if the move is not legal.  INCOMPLETE if the move results in a jump.
+        /// ЗАКОННЫЙ, если движение законно. Незаконный, если движение не законно. НЕПОЛНЫЙ, если движение приводит к скачку.
+        /// </returns>
+        public static MoveStatus IsMoveLegal(IBoard board, Move move, Player player)
       {
          MoveStatus status = MoveStatus.Illegal;
 
@@ -413,36 +438,46 @@ namespace Okorodudu.Checkers.Engine
          return status;
       }
 
-      /// <summary>
-      /// Is the move legal. This move doesn't check multiple jumps.
-      /// </summary>
-      /// <param name="board">
-      /// the board state
-      /// </param>
-      /// <param name="startRow">
-      /// the start row
-      /// </param>
-      /// <param name="startCol">
-      /// the start col
-      /// </param>
-      /// <param name="endRow">
-      /// the end row
-      /// </param>
-      /// <param name="endCol">
-      /// the end col
-      /// </param>
-      /// <param name="player">
-      /// the player with the turn
-      /// </param>
-      /// <returns>
-      /// LEGAL if the move is legal.  Illegal if the move is not legal.  INCOMPLETE if the move results in a jump.
-      /// </returns> 
-      private static MoveStatus IsMoveLegal(IBoard board, int startRow, int startCol, int endRow, int endCol, Player player)
+        /// <summary>
+        /// IsMoveLegal - Это законно
+        /// Is the move legal. This move doesn't check multiple jumps.
+        /// Это законный ход. Этот ход не проверяет несколько прыжков.
+        /// </summary>
+        /// <param name="board">
+        /// the board state
+        /// состояние правления
+        /// </param>
+        /// <param name="startRow">
+        /// the start row
+        /// начальный ряд
+        /// </param>
+        /// <param name="startCol">
+        /// the start col
+        /// начальный столб
+        /// </param>
+        /// <param name="endRow">
+        /// the end row
+        /// конец строки
+        /// </param>
+        /// <param name="endCol">
+        /// the end col
+        /// конец колонки
+        /// </param>
+        /// <param name="player">
+        /// the player with the turn
+        /// игрок с поворотом
+        /// </param>
+        /// <returns>
+        /// LEGAL if the move is legal.  Illegal if the move is not legal.  INCOMPLETE if the move results in a jump.
+        /// ЗАКОННЫЙ, если движение законно. Незаконный, если движение не законно. НЕПОЛНЫЙ, если движение приводит к скачку.
+        /// </returns> 
+        private static MoveStatus IsMoveLegal(IBoard board, int startRow, int startCol, int endRow, int endCol, Player player)
       {
          if (!InBounds(startRow, startCol, board) || !InBounds(endRow, endCol, board))
          {
-            // out of board bounds
-            return MoveStatus.Illegal;
+                // out of board bounds
+                //из границ правления
+                return MoveStatus.Illegal;
          }
 
          Piece startPosition = board[startRow, startCol];
@@ -450,43 +485,53 @@ namespace Okorodudu.Checkers.Engine
 
          if ((player == Player.Black && !BoardUtilities.IsBlack(startPosition)) || (player == Player.White && !BoardUtilities.IsWhite(startPosition)))
          {
-            // wrong player attempting to make a move
-            return MoveStatus.Illegal;
+                // wrong player attempting to make a move
+                //неправильный игрок, пытающийся сделать движение
+                return MoveStatus.Illegal;
          }
          else if (!BoardUtilities.IsEmpty(endPosition))
          {// destination is not empty
-            return MoveStatus.Illegal;
+          //место назначения не пусто
+                return MoveStatus.Illegal;
          }
 
          int forwardDirection = (BoardUtilities.IsBlack(startPosition)) ? 1 : -1;
          int backwardDirection = (!BoardUtilities.IsKing(startPosition)) ? 0 : (BoardUtilities.IsBlack(startPosition)) ? -1 : 1;
 
-         // check for single step along vertical axis
-         if (Math.Abs(endRow - startRow) == 1)
+            // check for single step along vertical axis
+            //проверьте на единственный шаг вдоль вертикальной оси
+            if (Math.Abs(endRow - startRow) == 1)
          {//possible walk made
-            // check if we took a walk when a jump was available
-            if (CanJump(board, player))
+          //возможная ходьба сделана
+          // check if we took a walk when a jump was available
+          //проверьте, прогулялись ли мы, когда скачок был доступен
+                if (CanJump(board, player))
             {
                return MoveStatus.Illegal;
             }
 
-            // one step along the horizontal axis and proper vertical direction movement
-            // men can't go backwards but kings can
-            if ((Math.Abs(endCol - startCol) == 1) && (startRow + forwardDirection == endRow || startRow + backwardDirection == endRow))
+                // one step along the horizontal axis and proper vertical direction movement
+                // один шаг по горизонтальной оси и правильное вертикальное движение
+                // men can't go backwards but kings can
+                // люди не могут идти назад, но короли могут
+                if ((Math.Abs(endCol - startCol) == 1) && (startRow + forwardDirection == endRow || startRow + backwardDirection == endRow))
             {
                return MoveStatus.Legal;
             }
          }
          else if (Math.Abs(endRow - startRow) == 2)
          {// possible jump made
-            int jumpedRow = (endRow + startRow) / 2;
+          // возможный прыжок сделан
+                int jumpedRow = (endRow + startRow) / 2;
             int jumpedCol = (endCol + startCol) / 2;
 
             if (BoardUtilities.IsOpponentPiece(player, board[jumpedRow, jumpedCol]))
             {
-               // one step along the horizontal axis and proper vertical direction movement
-               // men can't go backwards but kings can
-               if ((Math.Abs(endCol - startCol) == 2) && (startRow + forwardDirection * 2 == endRow || startRow + backwardDirection * 2 == endRow))
+                    // one step along the horizontal axis and proper vertical direction movement
+                    // один шаг по горизонтальной оси и правильное вертикальное движение
+                    // men can't go backwards but kings can
+                    // люди не могут идти назад, но короли могут
+                    if ((Math.Abs(endCol - startCol) == 2) && (startRow + forwardDirection * 2 == endRow || startRow + backwardDirection * 2 == endRow))
                {
                   return MoveStatus.Incomplete;
                }
@@ -496,16 +541,20 @@ namespace Okorodudu.Checkers.Engine
          return MoveStatus.Illegal;
       }
 
-      /// <summary>
-      /// update the board with the given move
-      /// </summary>
-      /// <param name="board">
-      /// the board state
-      /// </param>
-      /// <param name="move">
-      /// the move (which can be encoded moves containing multiple jumps)
-      /// </param>
-      public static void UpdateBoard(IBoard board, Move move)
+        /// <summary>
+        /// UpdateBoard - Обновление доски
+        /// update the board with the given move
+        /// обновить доску заданным ходом
+        /// </summary>
+        /// <param name="board">
+        /// the board state
+        /// состояние правления
+        /// </param>
+        /// <param name="move">
+        /// the move (which can be encoded moves containing multiple jumps)
+        /// ход (который может быть закодирован ходами, содержащими несколько прыжков)
+        /// </param>
+        public static void UpdateBoard(IBoard board, Move move)
       {
          if (move == null)
          {
@@ -522,25 +571,32 @@ namespace Okorodudu.Checkers.Engine
          }
       }
 
-      /// <summary>
-      /// Perform a single move
-      /// </summary>
-      /// <param name="board">
-      /// the board state
-      /// </param>
-      /// <param name="startRow">
-      /// the start row
-      /// </param>
-      /// <param name="startCol">
-      /// the start column
-      /// </param>
-      /// <param name="endRow">
-      /// the end row
-      /// </param>
-      /// <param name="endCol">
-      /// the end column
-      /// </param>
-      private static MoveStatus PerformMove(IBoard board, int startRow, int startCol, int endRow, int endCol)
+        /// <summary>
+        /// PerformMove - Выполнить движение
+        /// Perform a single move
+        /// Выполнить один ход
+        /// </summary>
+        /// <param name="board">
+        /// the board state
+        /// состояние правления
+        /// </param>
+        /// <param name="startRow">
+        /// the start row
+        /// начальный ряд
+        /// </param>
+        /// <param name="startCol">
+        /// the start column
+        /// начальный столбец
+        /// </param>
+        /// <param name="endRow">
+        /// the end row
+        /// конец строки
+        /// </param>
+        /// <param name="endCol">
+        /// the end column
+        /// конец столбца
+        /// </param>
+        private static MoveStatus PerformMove(IBoard board, int startRow, int startCol, int endRow, int endCol)
       {
          MoveStatus moveStatus = IsMoveLegal(board, startRow, startCol, endRow, endCol, BoardUtilities.GetPlayer(board[startRow, startCol]));
 
@@ -548,12 +604,14 @@ namespace Okorodudu.Checkers.Engine
          {
             if (Math.Abs(endRow - startRow) == 1)
             {//walk
-               board[endRow, endCol] = board[startRow, startCol];
+             // ходить
+                    board[endRow, endCol] = board[startRow, startCol];
                board[startRow, startCol] = Piece.None;
             }
             else
             {// jump piece
-               int jumpedRow = (startRow + endRow) / 2;
+             // прыжок
+                    int jumpedRow = (startRow + endRow) / 2;
                int jumpedCol = (startCol + endCol) / 2;
                board[jumpedRow, jumpedCol] = Piece.None;
                board[endRow, endCol] = board[startRow, startCol];
@@ -565,7 +623,8 @@ namespace Okorodudu.Checkers.Engine
                moveStatus = MoveStatus.Legal;
             }
 
-            // check if the piece is now a king
+                // check if the piece is now a king
+                // проверяем, является ли фигура королем
             if ((board[endRow, endCol] == Piece.BlackMan) && (endRow == BoardConstants.Rows - 1))
             {
                board[endRow, endCol] = Piece.BlackKing;
@@ -579,22 +638,28 @@ namespace Okorodudu.Checkers.Engine
          return moveStatus;
       }
 
-      /// <summary>
-      /// Generate captures list for the piece at the given location
-      /// </summary>
-      /// <param name="moves">
-      /// capture moves will be added to the collection
-      /// </param>
-      /// <param name="board">
-      /// the board state
-      /// </param>
-      /// <param name="row">
-      /// the row of the piece
-      /// </param>
-      /// <param name="col">
-      /// the column of the piece
-      /// </param>
-      private static void GetCaptures(ICollection<Move> moves, IBoard board, int row, int col)
+        /// <summary>
+        /// GetCaptures - Получить захваты
+        /// Generate captures list for the piece at the given location
+        /// Создать список снимков для произведения в заданном месте
+        /// </summary>
+        /// <param name="moves">
+        /// capture moves will be added to the collection
+        /// захватить движения будут добавлены в коллекцию
+        /// </param>
+        /// <param name="board">
+        /// the board state
+        ///  состояние правления
+        /// </param>
+        /// <param name="row">
+        /// the row of the piece
+        /// строка произведения
+        /// </param>
+        /// <param name="col">
+        /// the column of the piece
+        /// столбец произведения
+        /// </param>
+        private static void GetCaptures(ICollection<Move> moves, IBoard board, int row, int col)
       {
          Piece piece = board[row, col];
          IList<Location> locations = new List<Location>();
@@ -602,55 +667,69 @@ namespace Okorodudu.Checkers.Engine
 
          if (BoardUtilities.IsKing(piece) || BoardUtilities.IsBlack(piece))
          {// go up
-            GetCaptures(moves, new List<Location>(locations), board.Copy(), piece, row, col, -1, 1); // right
+          //подниматься
+                GetCaptures(moves, new List<Location>(locations), board.Copy(), piece, row, col, -1, 1); // right
             GetCaptures(moves, new List<Location>(locations), board.Copy(), piece, row, col, 1, 1); // left
          }
          if (BoardUtilities.IsKing(piece) || BoardUtilities.IsWhite(piece))
          {// go down
-            GetCaptures(moves, new List<Location>(locations), board.Copy(), piece, row, col, -1, -1); // right
+          // опускаться
+                GetCaptures(moves, new List<Location>(locations), board.Copy(), piece, row, col, -1, -1); // right
             GetCaptures(moves, new List<Location>(locations), board, piece, row, col, 1, -1); // left
          }
       }
 
-      /// <summary>
-      /// Generate captures list for the piece at the given location
-      /// </summary>
-      /// <param name="moves">
-      /// stores the list of moves generated
-      /// </param>
-      /// <param name="locations">
-      /// list of parent locations
-      /// </param>
-      /// <param name="board">
-      /// the board state
-      /// </param>
-      /// <param name="piece">
-      /// the piece
-      /// </param>
-      /// <param name="row">
-      /// the row of the piece
-      /// </param>
-      /// <param name="col">
-      /// the column of the piece
-      /// </param>
-      /// <param name="dx">
-      /// the horizontal direction
-      /// </param>
-      /// <param name="dy">
-      /// the vertical direction
-      /// </param>
-      /// <returns><c>true</c> 
-      /// if capture available
-      /// </returns>
-      private static bool GetCaptures(ICollection<Move> moves, IList<Location> locations, IBoard board, Piece piece, int row, int col, int dx, int dy)
+        /// <summary>
+        /// GetCaptures - Получить захваты
+        /// Generate captures list for the piece at the given location
+        /// Создать список снимков для произведения в заданном месте
+        /// </summary>
+        /// <param name="moves">
+        /// stores the list of moves generated
+        /// сохраняет список сгенерированных ходов
+        /// </param>
+        /// <param name="locations">
+        /// list of parent locations
+        /// список родительских локаций
+        /// </param>
+        /// <param name="board">
+        /// the board state
+        ///  состояние правления
+        /// </param>
+        /// <param name="piece">
+        /// the piece
+        /// кусок
+        /// </param>
+        /// <param name="row">
+        /// the row of the piece
+        ///  строка произведения
+        /// </param>
+        /// <param name="col">
+        /// the column of the piece
+        /// столбец произведения
+        /// </param>
+        /// <param name="dx">
+        /// the horizontal direction
+        ///  горизонтальное направление
+        /// </param>
+        /// <param name="dy">
+        /// the vertical direction
+        /// вертикальное направление
+        /// </param>
+        /// <returns><c>true</c> 
+        /// if capture available
+        /// если захват доступен
+        /// </returns>
+        private static bool GetCaptures(ICollection<Move> moves, IList<Location> locations, IBoard board, Piece piece, int row, int col, int dx, int dy)
       {
          int endRow = row + dy * 2;
          int endCol = col + dx * 2;
          int jumpRow = row + dy;
          int jumpCol = col + dx;
 
-         // jump available
-         if (InBounds(endRow, endCol, board) && BoardUtilities.AreOpponents(piece, board[jumpRow, jumpCol]) && BoardUtilities.IsEmpty(board[endRow, endCol]))
+            // jump available
+            // прыжок доступен
+            if (InBounds(endRow, endCol, board) && BoardUtilities.AreOpponents(piece, board[jumpRow, jumpCol]) && BoardUtilities.IsEmpty(board[endRow, endCol]))
          {
             locations.Add(new Location(endRow, endCol));
             board[row, col] = Piece.None;
@@ -658,7 +737,7 @@ namespace Okorodudu.Checkers.Engine
             board[endRow, endCol] = piece;
 
             bool captureAvailable = false;
-            int[] DIRECTIONS = { -1, 1 }; // {down/right, up/left}
+            int[] DIRECTIONS = { -1, 1 }; // {down/right, up/left} // {вниз / вправо, вверх / влево}
             int Y_START_INDEX = (BoardUtilities.IsKing(piece) || BoardUtilities.IsWhite(piece)) ? 0 : 1;
             int Y_END_INDEX = (BoardUtilities.IsKing(piece) || BoardUtilities.IsBlack(piece)) ? 1 : 0;
 
@@ -705,8 +784,9 @@ namespace Okorodudu.Checkers.Engine
 
       public static void GetCaptures(ICollection<Move> moves, IBoard board, Player player)
       {
-         // Get captures
-         for (int pos = 1; pos <= BoardConstants.LightSquareCount; pos++)
+            // Get captures
+            // Получить снимки
+            for (int pos = 1; pos <= BoardConstants.LightSquareCount; pos++)
          {
             if (BoardUtilities.IsOwner(player, board[pos]))
             {
@@ -715,8 +795,8 @@ namespace Okorodudu.Checkers.Engine
             }
          }
       }
-
-      public static ICollection<Move> GetAvailableMoves(IBoard board, Player player)
+        //Получить доступные ходы
+        public static ICollection<Move> GetAvailableMoves(IBoard board, Player player)
       {
          List<Move> moves = new List<Move>();
          GetCaptures(moves, board, player);
@@ -730,25 +810,32 @@ namespace Okorodudu.Checkers.Engine
       }
 
 
-      /// <summary>
-      /// Attempt to resolve ambiguous jump move.  The longest move matching the first 
-      /// location and last location is selected.
-      /// </summary>
-      /// <param name="board">
-      /// The board
-      /// </param>
-      /// <param name="move">
-      /// The possibly ambiguos move
-      /// </param>
-      /// <returns><c>true</c> 
-      /// if move could be resolved
-      /// </returns>
-      public static Move ResolveAmbiguousMove(IBoard board, Move move)
+        /// <summary>
+        /// ResolveAmbiguousMove -   Решить неоднозначное движение
+        /// Attempt to resolve ambiguous jump move.  The longest move matching the first 
+        /// location and last location is selected.
+        ///  Попытка разрешить неоднозначное прыжковое движение. Самый длинный ход, соответствующий первому и 
+        ///  последнему местоположению, выбран.
+        /// </summary>
+        /// <param name="board">
+        /// The board
+        /// Доска
+        /// </param>
+        /// <param name="move">
+        /// The possibly ambiguos move
+        /// Возможно двусмысленное движение
+        /// </param>
+        /// <returns><c>true</c> 
+        /// if move could be resolved
+        /// если движение может быть решено
+        /// </returns>
+        public static Move ResolveAmbiguousMove(IBoard board, Move move)
       {
          if (move.Count < 2)
          {
-            // can't resolve moves with less than 2 locations in path
-            return move;
+                // can't resolve moves with less than 2 locations in path
+                // не можем разрешить ходы с менее чем 2 местоположениями в пути
+                return move;
          }
 
          Location startLocation = move.OriginLocation;
