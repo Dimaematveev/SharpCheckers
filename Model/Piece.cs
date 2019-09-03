@@ -4,39 +4,53 @@ using System.Text;
 
 namespace Okorodudu.Checkers.Model
 {
-   /// <summary>
-   /// The various pieces
-   /// </summary>
-   public enum Piece
+    /// <summary>
+    /// Piece - Кусок
+    /// The various pieces
+    /// Различные части
+    /// </summary>
+    public enum Piece
    {
-      /// <summary>
-      /// This indicates an invalid piece.  i.e. Invalid square
-      /// </summary>
-      Illegal,
+        /// <summary>
+        /// Illegal - Незаконно
+        /// This indicates an invalid piece.  i.e. Invalid square
+        /// Это указывает на неверный кусок. то есть неверный квадрат
+        /// </summary>
+        Illegal,
 
-      /// <summary>
-      /// This indicates that the square is empty and has no piece
-      /// </summary>
-      None,
+        /// <summary>
+        /// None - Никто
+        /// This indicates that the square is empty and has no piece
+        /// Это указывает на то, что квадрат пуст и не имеет фигуры
+        /// </summary>
+        None,
 
-      /// <summary>
-      /// Black man piece
-      /// </summary>
-      BlackMan,
+        /// <summary>
+        /// BlackMan - Черная пешка
+        /// Black man piece
+        /// на квадрате черная пешка
+        /// </summary>
+        BlackMan,
 
-      /// <summary>
-      /// White man piece
-      /// </summary>
-      WhiteMan,
+        /// <summary>
+        /// WhiteMan -  белая пешка
+        /// White man piece
+        /// на квадрате белая пешка
+        /// </summary>
+        WhiteMan,
 
-      /// <summary>
-      /// Black king piece
-      /// </summary>
-      BlackKing,
+        /// <summary>
+        /// BlackKing -  черный король
+        /// Black king piece
+        /// на квадрате  черный король
+        /// </summary>
+        BlackKing,
 
-      /// <summary>
-      /// White king piece
-      /// </summary>
-      WhiteKing
-   }
+        /// <summary>
+        /// WhiteKing - белый король
+        /// White king piece
+        /// на квадрате белый король
+        /// </summary>
+        WhiteKing
+    }
 }

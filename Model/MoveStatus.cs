@@ -4,18 +4,32 @@ using System.Text;
 
 namespace Okorodudu.Checkers.Model
 {
-   /// <summary>
-   /// Possible status of checker moves
-   /// </summary>
-   public enum MoveStatus
+    /// <summary>
+    /// MoveStatus -  статус движения
+    /// Possible status of checker moves
+    ///  Возможный статус ходов проверки
+    /// </summary>
+    public enum MoveStatus
    {
-      /// <summary>The move is legal</summary>
-      Legal,
+        /// <summary>
+        /// Legal - разрешено
+        /// The move is legal
+        /// Движение законно
+        /// </summary>
+        Legal,
 
-      /// <summary>The move is illegal</summary>
-      Illegal,
+        /// <summary>
+        /// Illegal -  Невозможно
+        /// The move is illegal
+        /// движение недопустимо
+        /// </summary>
+        Illegal,
 
-      /// <summary>The move is legal but not completed because it hasn't been determined if there is a multiple jump</summary>
-      Incomplete
-   }
+        /// <summary>
+        /// Incomplete - незавершенный
+        /// The move is legal but not completed because it hasn't been determined if there is a multiple jump
+        /// Перемещение разрешено, но не завершено, поскольку не было определено, есть ли многократный переход 
+        /// </summary>
+        Incomplete
+    }
 }

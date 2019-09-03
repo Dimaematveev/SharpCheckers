@@ -5,47 +5,72 @@ using System.Text;
 
 namespace Okorodudu.Checkers.Model
 {
-   /// <summary>
-   /// Encaspsulates a single checkers move.  This includes possible jumps via captures.
-   /// </summary>
-   public class Move
+    /// <summary>
+    /// Move - Движение
+    /// Encaspsulates a single checkers move.  This includes possible jumps via captures.
+    /// Включает в себя один ход шашки. Это включает в себя возможные прыжки через захваты
+    /// </summary>
+    public class Move
    {
       private readonly List<int> positions = new List<int>();
 
 
-      /// <summary>
-      /// Construct an empty move
-      /// </summary>
-      public Move()
+        /// <summary>
+        /// Construct an empty move
+        /// Построить пустой ход
+        /// </summary>
+        public Move()
       {
       }
 
-      /// <summary>
-      /// Construct a move based on the board postion notation
-      /// </summary>
-      /// <param name="first">The origin of the move</param>
-      /// <param name="rest">The remaining moves.  Greater than one if this move contains jumps</param>
-      public Move(int first, params int[] rest)
-      {
-         AddMoves(first, rest);
-      }
-
-      /// <summary>
-      /// Construct a move with the given board locations
-      /// </summary>
-      /// <param name="first">The origin of the move</param>
-      /// <param name="rest">The remaining moves.  Greater than one if this move contains jumps</param>
-      public Move(Location first, params Location[] rest)
+        /// <summary>
+        /// Construct a move based on the board postion notation
+        /// Построить ход на основе обозначения позиции на доске
+        /// </summary>
+        /// <param name="first">
+        /// The origin of the move
+        /// Происхождение переезда
+        /// </param>
+        /// <param name="rest">
+        /// The remaining moves.  Greater than one if this move contains jumps
+        ///  Остальные ходы. Больше единицы, если этот ход содержит прыжки
+        /// </param>
+        public Move(int first, params int[] rest)
       {
          AddMoves(first, rest);
       }
 
-      /// <summary>
-      /// Get the board notation location at the given index.  This is zero-based.
-      /// </summary>
-      /// <param name="moveIndex">The index to get position for</param>
-      /// <returns>The position at the given index</returns>
-      public int this[int moveIndex]
+        /// <summary>
+        /// Construct a move with the given board locations
+        /// Построить ход с заданными местоположениями доски
+        /// </summary>
+        /// <param name="first">
+        /// The origin of the move
+        ///  Происхождение переезда
+        /// </param>
+        /// <param name="rest">
+        /// The remaining moves.  Greater than one if this move contains jumps
+        /// Остальные ходы. Больше единицы, если этот ход содержит прыжки
+        /// </param>
+        public Move(Location first, params Location[] rest)
+      {
+         AddMoves(first, rest);
+      }
+
+        /// <summary>
+        /// this[int moveIndex]
+        /// Get the board notation location at the given index.  This is zero-based.
+        ///  Получить расположение обозначения доски по заданному индексу. Это с нуля.
+        /// </summary>
+        /// <param name="moveIndex">
+        /// The index to get position for
+        /// Индекс для получения позиции для
+        /// </param>
+        /// <returns>
+        /// The position at the given index
+        /// Позиция по данному индексу
+        /// </returns>
+        public int this[int moveIndex]
       {
          get
          {
@@ -58,12 +83,18 @@ namespace Okorodudu.Checkers.Model
          }
       }
 
-      /// <summary>
-      /// Get the location at the given index.  This is zero-based.
-      /// </summary>
-      /// <param name="moveIndex"></param>
-      /// <returns></returns>
-      public Location GetLocation(int moveIndex)
+        /// <summary>
+        /// GetLocation - Получить местоположение
+        /// Get the location at the given index.  This is zero-based.
+        /// Получить местоположение по заданному индексу. Это с нуля.
+        /// </summary>
+        /// <param name="moveIndex">
+        /// TODO:
+        /// </param>
+        /// <returns>
+        /// TODO:
+        /// </returns>
+        public Location GetLocation(int moveIndex)
       {
          if ((moveIndex < 0) || (moveIndex >= positions.Count))
          {
@@ -73,12 +104,20 @@ namespace Okorodudu.Checkers.Model
          return Location.FromPosition(positions[moveIndex]);
       }
 
-      /// <summary>
-      /// Add the given locations to this move
-      /// </summary>
-      /// <param name="first">The first location to add</param>
-      /// <param name="rest">The remaining positions to add</param>
-      public void AddMoves(Location first, params Location[] rest)
+        /// <summary>
+        /// AddMoves - Добавить ходы
+        /// Add the given locations to this move
+        /// Добавить указанные места к этому ходу
+        /// </summary>
+        /// <param name="first">
+        /// The first location to add
+        ///  Первое место для добавления
+        /// </param>
+        /// <param name="rest">
+        /// The remaining positions to add
+        /// Остальные позиции для добавления
+        /// </param>
+        public void AddMoves(Location first, params Location[] rest)
       {
          positions.Add(first.ToPosition());
          foreach (Location location in rest)
@@ -87,12 +126,20 @@ namespace Okorodudu.Checkers.Model
          }
       }
 
-      /// <summary>
-      /// Add the given locations to this move using board notation
-      /// </summary>
-      /// <param name="first">The first location to add</param>
-      /// <param name="rest">The remaining positions to add</param>
-      public void AddMoves(int first, params int[] rest)
+        /// <summary>
+        /// AddMoves - Добавить ходы
+        /// Add the given locations to this move using board notation
+        /// Добавьте указанные места к этому ходу, используя обозначение на доске
+        /// </summary>
+        /// <param name="first">
+        /// The first location to add
+        ///  Первое место для добавления
+        /// </param>
+        /// <param name="rest">
+        /// The remaining positions to add
+        /// Остальные позиции для добавления
+        /// </param>
+        public void AddMoves(int first, params int[] rest)
       {
          positions.Add(first);
          foreach (int position in rest)
@@ -101,18 +148,22 @@ namespace Okorodudu.Checkers.Model
          }
       }
 
-      /// <summary>
-      /// Get the number of positions in this move
-      /// </summary>
-      public int Count
+        /// <summary>
+        /// Count - подсчитывать
+        /// Get the number of positions in this move
+        ///  Получить количество позиций в этом ходу
+        /// </summary>
+        public int Count
       {
          get { return positions.Count; }
       }
 
-      /// <summary>
-      /// Get the origin of this move in board notation.  This is the position the move originated at.
-      /// </summary>
-      public int? Origin
+        /// <summary>
+        /// Origin - Происхождение
+        /// Get the origin of this move in board notation.  This is the position the move originated at.
+        /// Получить происхождение этого хода в нотации доски. Это позиция, в которой возникло движение.
+        /// </summary>
+        public int? Origin
       {
          get
          {
@@ -120,10 +171,12 @@ namespace Okorodudu.Checkers.Model
          }
       }
 
-      /// <summary>
-      /// Get the final position of this move in board notation.
-      /// </summary>
-      public int? Destination
+        /// <summary>
+        /// Destination - Место назначения
+        /// Get the final position of this move in board notation.
+        /// Получить окончательную позицию этого хода в нотации доски.
+        /// </summary>
+        public int? Destination
       {
          get
          {
@@ -131,10 +184,12 @@ namespace Okorodudu.Checkers.Model
          }
       }
 
-      /// <summary>
-      /// Get the origin of this move.  This is the position the move originated at.
-      /// </summary>
-      public Location OriginLocation
+        /// <summary>
+        /// OriginLocation - Место происхождения
+        /// Get the origin of this move.  This is the position the move originated at.
+        /// Получите источник этого движения. Это позиция, в которой возникло движение.
+        /// </summary>
+        public Location OriginLocation
       {
          get
          {
@@ -142,10 +197,12 @@ namespace Okorodudu.Checkers.Model
          }
       }
 
-      /// <summary>
-      /// Get the final position of this move.
-      /// </summary>
-      public Location DestinationLocation
+        /// <summary>
+        /// DestinationLocation - Место назначения
+        /// Get the final position of this move.
+        /// Получить окончательную позицию этого хода.
+        /// </summary>
+        public Location DestinationLocation
       {
          get
          {
@@ -153,9 +210,16 @@ namespace Okorodudu.Checkers.Model
          }
       }
 
-      /// <summary>Is this a jumping move</summary>
-      /// <returns><code>true</code> if this is a jumping move</returns>
-      public bool IsJump()
+        /// <summary>
+        /// IsJump - это прыжок
+        /// Is this a jumping move
+        /// Это прыжок
+        /// </summary>
+        /// <returns><code>true</code>
+        /// if this is a jumping move
+        /// если это прыжок
+        /// </returns>
+        public bool IsJump()
       {
          if (positions.Count > 2)
          {
@@ -173,9 +237,16 @@ namespace Okorodudu.Checkers.Model
          }
       }
 
-      /// <summary>Get the short notation formatted location</summary>
-      /// <returns>the short notation formatted location</returns>
-      public String ToShortNotationLocation()
+        /// <summary>
+        /// ToShortNotationLocation - Для краткого обозначения местоположения
+        /// Get the short notation formatted location
+        ///  Получить краткую запись в формате
+        /// </summary>
+        /// <returns>
+        /// the short notation formatted location
+        ///  расположение в короткой записи
+        /// </returns>
+        public String ToShortNotationLocation()
       {
          if (positions.Count == 0)
          {
@@ -189,8 +260,12 @@ namespace Okorodudu.Checkers.Model
 
       }
 
-      /// <summary>String representation of move</summary>
-      public override String ToString()
+        /// <summary>
+        /// ToString - в строку
+        /// String representation of move
+        /// Строковое представление хода
+        /// </summary>
+        public override String ToString()
       {
          return ToShortNotationLocation();
       }
