@@ -23,14 +23,14 @@ namespace Okorodudu.Checkers.Model
         /// <summary>
         /// Black - Черный
         /// The black piece player
-        /// Черная фигура игрока
+        /// Фигура черного игрока
         /// </summary>
         Black,
 
         /// <summary>
         /// White - Белый
         /// The white piece player
-        /// Белая фигура игрока
+        /// Фигура белого игрока
         /// </summary>
         White
     }

@@ -4,17 +4,19 @@ using System.Text;
 
 namespace Okorodudu.Checkers.Model
 {
+    //TODO:ы Piece - Участок(Участок на доске - клетка) или фигура!!!!
+
     /// <summary>
-    /// Piece - Кусок
+    /// Piece - Участок
     /// The various pieces
-    /// Различные части
+    /// Различные участки
     /// </summary>
     public enum Piece
    {
         /// <summary>
         /// Illegal - Незаконно
         /// This indicates an invalid piece.  i.e. Invalid square
-        /// Это указывает на неверный кусок. то есть неверный квадрат
+        /// Это указывает на неверный участок. то есть неверный квадрат
         /// </summary>
         Illegal,
 
