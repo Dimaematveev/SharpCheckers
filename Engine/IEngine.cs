@@ -52,6 +52,5 @@ namespace Okorodudu.Checkers.Engine
         /// «аставить двигатель двигатьс€ немедленно
         /// </summary>
         void ForceMove();
-
-        int Evaluate(IBoard board, Player player);
+   }
 }
