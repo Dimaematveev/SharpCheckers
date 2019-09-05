@@ -9,11 +9,15 @@ using Okorodudu.Checkers.Engine;
 
 namespace Okorodudu.Checkers.Presenter
 {
-   /// <summary>
-   /// The board presenter
-   /// </summary>
-   public class BoardPresenter
+    /// <summary>
+    /// BoardPresenter - Ведущий Совета
+    /// The board presenter
+    /// ведущий форума
+    /// </summary>
+    public class BoardPresenter
    {
+
+        //TODO:
       private delegate void GenerateComputerMoveDelegate();
 
       private readonly PlayerInfo blackPlayerInfo = new PlayerInfo(Player.Black, false);
@@ -23,11 +27,15 @@ namespace Okorodudu.Checkers.Presenter
       private readonly IBoardRules boardRules;
       private PlayerInfo turn;
 
-      /// <summary>
-      /// Construct a board presenter that will manage the given board view
-      /// </summary>
-      /// <param name="view">The board view</param>
-      public BoardPresenter(IBoardView view)
+        /// <summary>
+        /// Construct a board presenter that will manage the given board view
+        /// Создайте докладчика, который будет управлять заданным видом доски
+        /// </summary>
+        /// <param name="view">
+        /// The board view
+        /// Вид доски
+        /// </param>
+        public BoardPresenter(IBoardView view)
       {
          this.view = view;
          this.board = new Checkerboard();
@@ -38,30 +46,49 @@ namespace Okorodudu.Checkers.Presenter
          view.SetBoardState(board.Copy());
       }
 
-      /// <summary>
-      /// Set whether the given player is controlled by the computer
-      /// </summary>
-      /// <param name="player">The player</param>
-      /// <param name="computer"><c>true</c> if this player should be computer controlled and <c>false</c> if otherwise</param>
-      public void SetComputer(Player player, bool computer)
+        /// <summary>
+        /// SetComputer - Установить компьютер
+        /// Set whether the given player is controlled by the computer
+        /// Установить, управляется ли данный игрок компьютером
+        /// </summary>
+        /// <param name="player">
+        /// The player
+        /// Игрок
+        /// </param>
+        /// <param name="computer"><c>true</c> 
+        /// if this player should be computer controlled and 
+        ///  если этот плеер должен управляться компьютером и
+        /// <c>false</c>
+        /// if otherwise
+        ///  если не так
+        /// </param>
+        public void SetComputer(Player player, bool computer)
       {
          PlayerInfo computerPlayer = GetPlayerInfo(player);
          computerPlayer.IsComputer = computer;
       }
 
-      /// <summary>
-      /// Start the game
-      /// </summary>
-      public void StartGame()
+        /// <summary>
+        /// StartGame - Начать игру
+        /// Start the game
+        /// Начать игру
+        /// </summary>
+        public void StartGame()
       {
          this.StartGame(Player.Black);
       }
 
-      /// <summary>
-      /// Start the game and give the intial turn to the specified player
-      /// </summary>
-      /// <param name="startingPlayer">The player with the starting move</param>
-      public void StartGame(Player startingPlayer)
+
+        /// <summary>
+        /// StartGame - Начать игру
+        /// Start the game and give the intial turn to the specified player
+        /// Запустите игру и дайте начальный ход указанному игроку
+        /// </summary>
+        /// <param name="startingPlayer">
+        /// The player with the starting move
+        /// Игрок со стартовым ходом
+        /// </param>
+        public void StartGame(Player startingPlayer)
       {
          blackPlayerInfo.Engine.CancelProcessing();
          whitePlayerInfo.Engine.CancelProcessing();
@@ -97,12 +124,20 @@ namespace Okorodudu.Checkers.Presenter
          }
       }
 
-      /// <summary>
-      /// Invoked when the game is over
-      /// </summary>
-      /// <param name="winner">The winner</param>
-      /// <param name="loser">The loser</param>
-      protected void OnGameOver(Player winner, Player loser)
+        /// <summary>
+        /// OnGameOver - Игра окончена
+        /// Invoked when the game is over
+        /// Вызывается, когда игра окончена
+        /// </summary>
+        /// <param name="winner">
+        /// The winner
+        /// Победитель
+        /// </param>
+        /// <param name="loser">
+        /// The loser
+        /// Неудачник
+        /// </param>
+        protected void OnGameOver(Player winner, Player loser)
       {
          if (winner != Player.None)
          {
@@ -112,6 +147,9 @@ namespace Okorodudu.Checkers.Presenter
          }
       }
 
+
+
+        //TODO:
       private void PromptMove(int? startPosition)
       {
          if (!turn.IsComputer)
@@ -135,12 +173,16 @@ namespace Okorodudu.Checkers.Presenter
          }
       }
 
+
+        //TODO:
       private void HandleComputerMove()
       {
          Move move = turn.GenerateMove(board);
          view.RenderMove(move, board.Copy());
       }
 
+
+        //TODO:
       private void HandleInvalidMove(Move move, String message)
       {
          view.ShowInvalidMove(move, turn.Player, message);
@@ -148,33 +190,43 @@ namespace Okorodudu.Checkers.Presenter
          PromptMove(null);
       }
 
-      /// <summary>
-      /// Attempt to make the specified move on the board
-      /// </summary>
-      /// <param name="move"></param>
-      public void MakeMove(Move move)
+        /// <summary>
+        /// MakeMove - Сделать ход
+        /// Attempt to make the specified move on the board
+        /// Попытка сделать указанный ход на доске
+        /// </summary>
+        /// <param name="move">TODO:</param>
+        public void MakeMove(Move move)
       {
          MakeMove(move, null);
       }
 
-      /// <summary>
-      /// Attempt to make the specified move on the board starting at the given position if present
-      /// </summary>
-      /// <param name="move">The move</param>
-      /// <param name="startPosition">The starting position of the move if this move is a jump continuation</param>
-      public void MakeMove(Move move, int? startPosition)
+        /// <summary>
+        ///  MakeMove - Сделать ход
+        /// Attempt to make the specified move on the board starting at the given position if present
+        /// Попытка сделать указанное движение на доске, начиная с заданной позиции, если присутствует
+        /// </summary>
+        /// <param name="move">
+        /// The move
+        /// Движение
+        /// </param>
+        /// <param name="startPosition">
+        /// The starting position of the move if this move is a jump continuation
+        /// Начальная позиция хода, если этот ход является продолжением прыжка
+        /// </param>
+        public void MakeMove(Move move, int? startPosition)
       {
          const int INVALID_POSITION = -1;
          int origin = move.Origin ?? INVALID_POSITION;
 
          if (origin == INVALID_POSITION)
          {
-            HandleInvalidMove(move, "Move contains no steps");
-         }
+            HandleInvalidMove(move, "Move contains no steps");//ход не содержит шагов
+            }
          else if ((startPosition.HasValue) && (origin != startPosition.Value))
          {
-            HandleInvalidMove(move, "You must finish jump");
-         }
+            HandleInvalidMove(move, "You must finish jump");//Вы должны закончить прыжок
+            }
          else
          {
             Piece piece = board[origin];
@@ -185,29 +237,31 @@ namespace Okorodudu.Checkers.Presenter
 
             if (piece == Piece.None)
             {
-               HandleInvalidMove(move, "No piece selected");
-            }
+               HandleInvalidMove(move, "No piece selected");//Не выбрано ни одного предмета
+                }
             else if (playerInfo != turn)
             {
-               HandleInvalidMove(move, string.Format(CultureInfo.InvariantCulture, "Not {0}'s turn", playerInfo.Player.ToString()));
-            }
+               HandleInvalidMove(move, string.Format(CultureInfo.InvariantCulture, "Not {0}'s turn", playerInfo.Player.ToString()));//Не ход {0}
+                }
             else if ((moveStatus = boardRules.IsValidMove(board, move, turn.Player)) == MoveStatus.Illegal)
             {
-               HandleInvalidMove(move, string.Format(CultureInfo.InvariantCulture, "Invalid move: {0}", move));
-            }
+               HandleInvalidMove(move, string.Format(CultureInfo.InvariantCulture, "Invalid move: {0}", move));//  Неверный ход: {0}
+                }
             else if (!boardRules.ApplyMove(board, move))
             {
-               HandleInvalidMove(move, string.Format(CultureInfo.InvariantCulture, "Unable to apply move move: {0}", move));
-            }
+               HandleInvalidMove(move, string.Format(CultureInfo.InvariantCulture, "Unable to apply move move: {0}", move));//     Невозможно применить ход перемещения: {0}
+                }
             else
             {
                view.SetBoardState(board.Copy());
 
-               // swap turn if the player has a complete move (no jumps)
-               if (moveStatus == MoveStatus.Incomplete)
+                    // swap turn if the player has a complete move (no jumps)
+                    // меняем ход, если у игрока полный ход (без прыжков)
+                    if (moveStatus == MoveStatus.Incomplete)
                {
-                  // at this point the move was valid and hence must have a destination
-                  view.SetMoveStartPosition(move.Destination.Value);
+                        // at this point the move was valid and hence must have a destination
+                        // в этот момент перемещение было допустимым и, следовательно, должно иметь пункт назначения
+                        view.SetMoveStartPosition(move.Destination.Value);
                }
                else
                {
@@ -220,12 +274,14 @@ namespace Okorodudu.Checkers.Presenter
          }
       }
 
+        //TODO:
       private void SwapTurn()
       {
          turn = GetOpponent(turn);
          view.SetMoveStartPosition(null);
       }
 
+        //TODO:
       private PlayerInfo GetOpponent(PlayerInfo playerInfo)
       {
          return (playerInfo == blackPlayerInfo) ? whitePlayerInfo : blackPlayerInfo;

@@ -10,11 +10,14 @@ using System.Globalization;
 
 namespace Okorodudu.Checkers.View.Providers.Console
 {
-   /// <summary>
-   /// Checkers application in console mode
-   /// </summary>
-   public class ConsoleCheckerboardView : IBoardView, IDisposable
+    /// <summary>
+    /// ConsoleCheckerboardView - вид шахматной доски консоли
+    /// Checkers application in console mode
+    /// Приложение для проверки в режиме консоли
+    /// </summary>
+    public class ConsoleCheckerboardView : IBoardView, IDisposable
    {
+        //TODO:
       private readonly AutoResetEvent autoResetEvent = new AutoResetEvent(false);
       private readonly BoardPresenter presenter;
       private readonly IBoard board = new Checkerboard();
@@ -22,50 +25,71 @@ namespace Okorodudu.Checkers.View.Providers.Console
       private readonly TextReader reader;
       private int? startPosition = null;
 
-      /// <summary>
-      /// Construct checkers game in console I/O mode
-      /// </summary>
-      public ConsoleCheckerboardView() : this(System.Console.Out, System.Console.In)
+        /// <summary>
+        /// Construct checkers game in console I/O mode
+        /// Построить игру в шашки в режиме консольного ввода-вывода
+        /// </summary>
+        public ConsoleCheckerboardView() : this(System.Console.Out, System.Console.In)
       {
       }
 
-      /// <summary>
-      /// Construct checkers game to use the given reader and writer for I/O
-      /// </summary>
-      /// <param name="writer">Used to write game play information to user</param>
-      /// <param name="reader">Used to get input from user</param>
-      public ConsoleCheckerboardView(TextWriter writer, TextReader reader)
+        /// <summary>
+        /// Construct checkers game to use the given reader and writer for I/O
+        /// Построить игру в шашки для использования данного читателя и писателя для ввода / вывода
+        /// </summary>
+        /// <param name="writer">
+        /// Used to write game play information to user
+        /// Используется для записи информации об игровом процессе пользователю
+        /// </param>
+        /// <param name="reader">
+        /// Used to get input from user
+        /// Используется для получения ввода от пользователя
+        /// </param>
+        public ConsoleCheckerboardView(TextWriter writer, TextReader reader)
       {
          this.writer = writer;
          this.reader = reader;
          this.presenter = new BoardPresenter(this);
       }
 
-      /// <summary>
-      /// Run the app
-      /// </summary>
-      private void run()
+        /// <summary>
+        /// run - бежать 
+        /// Run the app
+        /// Запустить приложение
+        /// </summary>
+        private void run()
       {
          this.presenter.StartGame();
 
-         // Keep application running even if there's only a background thread working
-         autoResetEvent.WaitOne();
+            // Keep application running even if there's only a background thread working
+            // Поддерживаем работу приложения, даже если работает только фоновый поток
+            autoResetEvent.WaitOne();
       }
 
-      /// <summary>
-      /// Dispose this object
-      /// </summary>
-      public void Dispose()
+        /// <summary>
+        /// Dispose - Утилизировать 
+        /// Dispose this object
+        /// Утилизировать этот объект
+        /// </summary>
+        public void Dispose()
       {
          this.Dispose(true);
          GC.SuppressFinalize(this);
       }
 
-      /// <summary>
-      /// Dispose this object
-      /// </summary>
-      /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources</param>
-      protected virtual void Dispose(bool disposing)
+        /// <summary>
+        /// Dispose - Утилизировать 
+        /// Dispose this object
+        /// Утилизировать этот объект
+        /// </summary>
+        /// <param name="disposing"><c>true</c> 
+        /// to release both managed and unmanaged resources; 
+        /// освободить как управляемые, так и неуправляемые ресурсы;
+        /// <c>false</c> 
+        /// to release only unmanaged resources
+        /// освободить только неуправляемые ресурсы
+        /// </param>
+        protected virtual void Dispose(bool disposing)
       {
          if (disposing)
          {
@@ -77,120 +101,187 @@ namespace Okorodudu.Checkers.View.Providers.Console
          }
       }
 
-      /// <summary>
-      /// Show the start message for the game
-      /// </summary>
-      public void ShowGameStart()
+        /// <summary>
+        /// ShowGameStart -  Показать начало игры
+        /// Show the start message for the game
+        /// Показать стартовое сообщение к игре
+        /// </summary>
+        public void ShowGameStart()
       {
          writer.WriteLine("Game started");
       }
 
-      /// <summary>
-      /// Set the board state to the state of the specified board
-      /// </summary>
-      /// <param name="board">The board to copy the state of</param>
-      public void SetBoardState(IBoard board)
+        /// <summary>
+        /// SetBoardState - Установить состояние правления
+        /// Set the board state to the state of the specified board
+        /// Установить состояние платы в состояние указанной доски
+        /// </summary>
+        /// <param name="board">
+        /// The board to copy the state of
+        /// Доска для копирования состояния
+        /// </param>
+        public void SetBoardState(IBoard board)
       {
          this.board.Copy(board);
       }
 
-      /// <summary>
-      /// Indicate to the user the player with the current turn
-      /// </summary>
-      /// <param name="turn"></param>
-      public void ShowPlayerChange(Player turn)
+        /// <summary>
+        /// ShowPlayerChange -Показать изменения игрока 
+        /// Indicate to the user the player with the current turn
+        /// Укажите пользователю игрока с текущим ходом
+        /// </summary>
+        /// <param name="turn">TODO:</param>
+        public void ShowPlayerChange(Player turn)
       {
          writer.WriteLine("{0}'s turn", turn.ToString());
          BoardTrace.DrawBoard(board, this.writer);
       }
 
-      /// <summary>
-      /// Set the position that the player must begin the move from.  This usually
-      /// indicates that the player must finish a move by completing a jump
-      /// </summary>
-      /// <param name="position">The position at which the current player must start the move</param>
-      public void SetMoveStartPosition(int? position)
+        /// <summary>
+        /// SetMoveStartPosition - Установить начальную позицию перемещения
+        /// Set the position that the player must begin the move from.  This usually
+        /// indicates that the player must finish a move by completing a jump
+        /// Установите позицию, с которой игрок должен начать движение. 
+        /// Обычно это означает, что игрок должен закончить ход, выполнив прыжок
+        /// </summary>
+        /// <param name="position">
+        /// The position at which the current player must start the move
+        /// Позиция, с которой текущий игрок должен начать ход
+        /// </param>
+        public void SetMoveStartPosition(int? position)
       {
          this.startPosition = position;
       }
 
-      /// <summary>
-      /// Allow or disallow the given player from moving
-      /// </summary>
-      /// <param name="player">The player</param>
-      /// <param name="locked">If <c>true</c>, the player is prevented from moving.  If otherwise, the player is allowed to move</param>
-      public void LockPlayer(Player player, bool locked)
+        /// <summary>
+        /// LockPlayer - Блокировка игрока
+        /// Allow or disallow the given player from moving
+        ///  Разрешить или запретить данному игроку двигаться
+        /// </summary>
+        /// <param name="player">
+        /// The player
+        /// Игрок
+        /// </param>
+        /// <param name="locked"> If <c>true</c>,
+        /// the player is prevented from moving.  If otherwise, the player is allowed to move
+        ///  игрок не может двигаться. Если иначе, игрок может двигаться
+        /// </param>
+        public void LockPlayer(Player player, bool locked)
       {
       }
 
-      /// <summary>
-      /// Prompt the given player to make move
-      /// </summary>
-      /// <param name="player">The player to prompt move for</param>
-      public void PromptMove(Player player)
+        /// <summary>
+        /// PromptMove - Быстрое движение
+        /// Prompt the given player to make move
+        /// Предложите данному игроку сделать ход
+        /// </summary>
+        /// <param name="player">
+        /// The player to prompt move for
+        /// Плеер, который подскажет ход
+        /// </param>
+        public void PromptMove(Player player)
       {
          writer.WriteLine("Select move ({0}):", player.ToString());
          OnMoveInput(MoveReader.ReadMove(reader, writer, true));
       }
 
-      /// <summary>
-      /// Prompt the player to make a move at the specified position.  This indicates that a move must be completed.
-      /// </summary>
-      /// <param name="player">The player to prompt</param>
-      /// <param name="position">The position at which the player should start the move from</param>
-      public void PromptMove(Player player, int position)
+        /// <summary>
+        /// PromptMove -  Быстрое движение 
+        /// Prompt the player to make a move at the specified position.  This indicates that a move must be completed.
+        /// Предложите игроку сделать ход в указанной позиции. Это указывает на то, что движение должно быть завершено.
+        /// </summary>
+        /// <param name="player">
+        /// The player to prompt
+        /// Плеер подскажет
+        /// </param>
+        /// <param name="position">
+        /// The position at which the player should start the move from
+        ///  Позиция, с которой игрок должен начать движение с
+        /// </param>
+        public void PromptMove(Player player, int position)
       {
          writer.WriteLine("Finish move ({0}) for {1}:", player.ToString(), position.ToString(CultureInfo.CurrentCulture));
          OnMoveInput(MoveReader.ReadMove(reader, writer, true));
       }
 
-      /// <summary>
-      /// Render the given move
-      /// </summary>
-      /// <param name="move">The move to render</param>
-      /// <param name="after">The state the board should be in after the move is rendered</param>
-      public void RenderMove(Move move, IBoard after)
+        /// <summary>
+        /// RenderMove - рендер двигаться
+        /// Render the given move
+        /// Отрисовать данный ход
+        /// </summary>
+        /// <param name="move">
+        /// The move to render
+        /// Ход рендеринга
+        /// </param>
+        /// <param name="after">
+        /// The state the board should be in after the move is rendered
+        /// Состояние, в котором доска должна быть после рендеринга хода
+        /// </param>
+        public void RenderMove(Move move, IBoard after)
       {
          board.Copy(after);
          writer.WriteLine("Move made: {0}", move.ToString());
          presenter.MakeMove(move);
       }
 
-      /// <summary>
-      /// Indicate to the user that an invalid move was made
-      /// </summary>
-      /// <param name="move">The invalid move that was played</param>
-      /// <param name="player">The player that made the move</param>
-      /// <param name="message">An message indicating the problem with the move</param>
-      public void ShowInvalidMove(Move move, Player player, string message)
+        /// <summary>
+        /// ShowInvalidMove - Показать неверное движение 
+        /// Indicate to the user that an invalid move was 
+        /// Укажите пользователю, что был неверный ход
+        /// </summary>
+        /// <param name="move">
+        /// The invalid move that was played
+        /// Неверный ход, который был сыгран
+        /// </param>
+        /// <param name="player">
+        /// The player that made the move
+        /// Игрок, который сделал ход
+        /// </param>
+        /// <param name="message">
+        /// An message indicating the problem with the move
+        /// Сообщение, указывающее на проблему с переездом
+        /// </param>
+        public void ShowInvalidMove(Move move, Player player, string message)
       {
          writer.WriteLine("Invalid move: " + message);
       }
 
-      /// <summary>
-      /// Indicate that the game is over
-      /// </summary>
-      /// <param name="winner">The winner of the match</param>
-      /// <param name="loser">The loser of the match</param>
-      public void ShowGameOver(Player winner, Player loser)
+        /// <summary>
+        /// ShowGameOver - Показать игру окончена
+        /// Indicate that the game is over
+        ///  Укажите, что игра окончена
+        /// </summary>
+        /// <param name="winner">
+        /// The winner of the match
+        /// Победитель матча
+        /// </param>
+        /// <param name="loser">
+        /// The loser of the match
+        /// Проигравший
+        /// </param>
+        public void ShowGameOver(Player winner, Player loser)
       {
          writer.WriteLine("GAME OVER");
          writer.WriteLine("{0} Wins", winner.ToString());
       }
 
-      /// <summary>
-      /// Invoked when a move is made
-      /// </summary>
-      /// <param name="move"></param>
-      protected virtual void OnMoveInput(Move move)
+        /// <summary>
+        /// OnMoveInput -  При перемещении ввода
+        /// Invoked when a move is made
+        /// Вызывается, когда сделан ход
+        /// </summary>
+        /// <param name="move">TODO:</param>
+        protected virtual void OnMoveInput(Move move)
       {
          presenter.MakeMove(move, startPosition);
       }
 
-      /// <summary>
-      /// The main entry point into the application
-      /// </summary>
-      public static void Main()
+        /// <summary>
+        /// Main - Главный
+        /// The main entry point into the application
+        /// Основная точка входа в приложение
+        /// </summary>
+        public static void Main()
       {
          ConsoleCheckerboardView app = new ConsoleCheckerboardView();
          app.run();

@@ -33,5 +33,5 @@ namespace Okorodudu.Checkers.View.Providers.Win
          this.boardPanel2D1.Width = width;
          this.boardPanel2D1.Height = height;
       }
-   }
+    }
 }
