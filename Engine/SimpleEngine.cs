@@ -62,7 +62,7 @@ namespace Okorodudu.Checkers.Engine
 
 
 
-
+        //TODO:
       private int MiniMax(ref Move bestMove, IBoard board, Player player, int ply, int depth, TimeSpan timeout, DateTime startTime)
       {
          if (depth <= 0)
@@ -131,53 +131,47 @@ namespace Okorodudu.Checkers.Engine
 
 
 
-
+        //TODO:
       private static int Evaluate(IBoard board, Player player)
       {
          const int MAN_WEIGHT = 100;
          const int KING_WEIGHT = 130;
          const int BACKRANK_WEIGHT = 10;
          int score = 0;
-         int whiteKings = 0, blackKings = 0, whiteMen = 0, blackMen = 0;
 
-         for (int pos = 1; pos < BoardConstants.LightSquareCount; pos++)
-         {
-            Piece piece = board[pos];
+        //считает количество фигур на поле
+         NumberPiece(board, out int whiteKings, out int blackKings, out int whiteMen, out int blackMen);
 
-            if (BoardUtilities.IsPiece(piece))
-            {
-               switch (piece)
-               {
-                  case Piece.BlackMan:
-                     blackMen++;
-                     break;
-                  case Piece.WhiteMan:
-                     whiteMen++;
-                     break;
-                  case Piece.BlackKing:
-                     blackKings++;
-                     break;
-                  case Piece.WhiteKing:
-                     whiteKings++;
-                     break;
-               }
-            }
-         }
 
-         if (blackMen + blackKings == 0)
+         if ((blackMen + blackKings) == 0)
          {
             whiteKings += 100; ;
          }
-         else if (whiteMen + whiteKings == 0)
+         else if ((whiteMen + whiteKings) == 0)
          {
             blackKings += 100;
          }
-         
-         if (board[31] == Piece.WhiteMan && board[30] == Piece.WhiteMan && blackMen > 1)
-            score -= BACKRANK_WEIGHT;
 
-         if (board[1] == Piece.BlackMan && board[3] == Piece.BlackMan && whiteMen > 1)
-            score += BACKRANK_WEIGHT;
+         //Если на краях доски пешки
+
+            for (int i = 32; i <= 29; i++)
+            {
+                if (board[i] == Piece.WhiteMan)
+                {
+                    score -= BACKRANK_WEIGHT;
+                }
+            }
+           
+
+            for (int i = 1; i <= 4; i++)
+            {
+                if (board[i] == Piece.BlackMan)
+                {
+                    score += BACKRANK_WEIGHT;
+                }
+            }
+           
+
 
          int blackPieceScore = blackKings * KING_WEIGHT + blackMen * MAN_WEIGHT;
          int whitePieceScore = whiteKings * KING_WEIGHT + whiteMen * MAN_WEIGHT;
@@ -192,5 +186,38 @@ namespace Okorodudu.Checkers.Engine
          const int RANDOMIZER_MAX = 10;
          return ((player == Player.Black) ? score : -score) + random.Next(RANDOMIZER_MIN, RANDOMIZER_MAX);
       }
-   }
+
+
+        //считает количество фигур на поле
+        private static void NumberPiece(IBoard board, out int whiteKings, out int blackKings, out int whiteMen, out int blackMen)
+        {
+            whiteKings = 0;
+            blackKings = 0;
+            whiteMen = 0;
+            blackMen = 0;
+            for (int pos = 1; pos <= BoardConstants.LightSquareCount; pos++)
+            {
+                Piece piece = board[pos];
+
+                if (BoardUtilities.IsPiece(piece))
+                {
+                    switch (piece)
+                    {
+                        case Piece.BlackMan:
+                            blackMen++;
+                            break;
+                        case Piece.WhiteMan:
+                            whiteMen++;
+                            break;
+                        case Piece.BlackKing:
+                            blackKings++;
+                            break;
+                        case Piece.WhiteKing:
+                            whiteKings++;
+                            break;
+                    }
+                }
+            }
+        }
+    }
 }
